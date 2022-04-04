@@ -1,2 +1,2 @@
 # PET-project
-peeling off the label from a PET
+automatically peeling off the label from a PET
