@@ -62,3 +62,21 @@ void adjustRodHeight(int bottlePlace, int currentRodPlace){
   // delay((bottlePlace - currentRodPlace)*bottle);
   // digitalWrite(rodVertControl, LOW);
 }
+
+void pumpIn(){
+}
+
+void pumpStop(){
+}
+
+void pushRods(){
+}
+
+void spinWheel(){
+}
+
+void pullRods(){
+}
+
+void stopWheel(){
+}
