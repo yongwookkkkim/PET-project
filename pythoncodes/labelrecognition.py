@@ -1,20 +1,39 @@
 import cv2
 import numpy as np
+from scipy.stats import gaussian_kde as kde
 
 cap=cv2.VideoCapture(1)
 
 #variables
-dellim=50
-recolim=50
-tolerance=76
+lim=50
+lbound=0.007
 
 while True:
     success, frame=cap.read()
-    img=cv2.Canny(frame,250,300)
-    '''
+    #img=cv2.Canny(frame,250,300) 
+    
     width=int(cap.get(3))
     height=int(cap.get(4))
 
+    strip=frame[:,width//2]
+    fr=strip[:,0]
+    fg=strip[:,1]
+    fb=strip[:,2]
+    try:
+        fr=kde(np.where(fr<lim)[0]).pdf(np.arange(height))
+    except:
+        fr=np.zeros(height)
+    try:
+        fg=kde(np.where(fg<lim)[0]).pdf(np.arange(height))
+    except:
+        fg=np.zeros(height)
+    try:
+        fb=kde(np.where(fb<lim)[0]).pdf(np.arange(height))
+    except:
+        fb=np.zeros(height)
+    f=fr+fg+fb
+    
+    '''
     #basic functions
     w0=np.arange(width)
     h0=np.arange(height)
@@ -37,15 +56,24 @@ while True:
     ftot[height-dellim:height,:]=3
 
     #recognising the limits
+    
+
     #print(np.where(ftot==0)[0])
+'''
+    #vertical line
+    img=cv2.line(frame, (width//2, 0), (width//2, height-1), (0,255,0), 2)
+
+    #kde
 
     #drawing line
-    if len(np.where(ftot==0)[0])!=0:
-        img=cv2.line(frame, (0,max(np.where(ftot==0)[0])), (width,max(np.where(ftot==0)[0])), (0,0,255), 2)
-        img=cv2.line(frame, (0,min(np.where(ftot==0)[0])), (width,min(np.where(ftot==0)[0])), (0,0,255), 2)
-    else:
-        img=frame
-    '''
+    try:
+        high=max(np.where(fr+fg+fb>lbound)[0])
+        low=min(np.where(fr+fg+fb>lbound)[0])
+        img=cv2.line(img, (0,high), (width-1,high), (0,0,255), 2)
+        img=cv2.line(img, (0,low), (width-1,low), (0,0,255), 2)
+    except:
+        pass
+
     #display
     cv2.imshow("frame", img)
     
