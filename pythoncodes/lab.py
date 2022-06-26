@@ -11,7 +11,7 @@ tolerance=30
 #open image and define width, height
 #frame, 
 
-frame1=cv2.resize(cv2.imread('kirkland2.jpg'), (480,640))
+frame1=cv2.resize(cv2.imread('kirkland3.jpg'), (480,640))
 f1r=frame1[:,240,0]
 try:
     f1r=sp.stats.gaussian_kde(np.where(f1r<50)).pdf(np.arange(640))

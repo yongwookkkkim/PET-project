@@ -2,11 +2,11 @@ import cv2
 import numpy as np
 from scipy.stats import gaussian_kde as kde
 
-cap=cv2.VideoCapture(1)
+cap=cv2.VideoCapture(0)
 
 #variables
 lim=50
-lbound=0.007
+lbound=0.004
 
 while True:
     success, frame=cap.read()
@@ -62,8 +62,6 @@ while True:
 '''
     #vertical line
     img=cv2.line(frame, (width//2, 0), (width//2, height-1), (0,255,0), 2)
-
-    #kde
 
     #drawing line
     try:
