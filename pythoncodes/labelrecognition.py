@@ -10,11 +10,11 @@ lbound=0.004
 
 while True:
     success, frame=cap.read()
-    #img=cv2.Canny(frame,250,300) 
     
     width=int(cap.get(3))
     height=int(cap.get(4))
 
+    #distribution
     strip=frame[:,width//2]
     fr=strip[:,0]
     fg=strip[:,1]
@@ -33,33 +33,6 @@ while True:
         fb=np.zeros(height)
     f=fr+fg+fb
     
-    '''
-    #basic functions
-    w0=np.arange(width)
-    h0=np.arange(height)
-    w,h=np.meshgrid(w0,h0)
-    frmg=lambda width, height: frame[height,width,0]-frame[height,width,1]
-    fgmb=lambda width, height: frame[height,width,1]-frame[height,width,2]
-    fbmr=lambda width, height: frame[height,width,2]-frame[height,width,0]
-    f0gmb=fgmb(w,h)
-    f0bmr=fbmr(w,h)
-    f0rmg=frmg(w,h)
-    
-    #digitalising
-    f0rmg=np.where(np.logical_and(f0rmg>-tolerance, f0rmg<tolerance),1,0)
-    f0bmr=np.where(np.logical_and(f0bmr>-tolerance, f0bmr<tolerance),1,0)
-    f0gmb=np.where(np.logical_and(f0gmb>-tolerance, f0gmb<tolerance),1,0)
-    ftot=f0gmb+f0bmr+f0rmg
-    
-    #removing meaningless outliers / mutable
-    ftot[0:dellim,:]=3
-    ftot[height-dellim:height,:]=3
-
-    #recognising the limits
-    
-
-    #print(np.where(ftot==0)[0])
-'''
     #vertical line
     img=cv2.line(frame, (width//2, 0), (width//2, height-1), (0,255,0), 2)
 

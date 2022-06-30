@@ -4,14 +4,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import scipy as sp
 
-dellim=50
-recolim=50
+dellim=10
 tolerance=30
 
 #open image and define width, height
 #frame, 
 
-frame1=cv2.resize(cv2.imread('kirkland3.jpg'), (480,640))
+frame1=cv2.resize(cv2.imread('damn.jpg'), (480,640))
 f1r=frame1[:,240,0]
 try:
     f1r=sp.stats.gaussian_kde(np.where(f1r<50)).pdf(np.arange(640))
@@ -19,12 +18,12 @@ except:
     f1r=np.zeros(640)
 f1g=frame1[:,240,1]
 try:
-    f1g=sp.stats.gaussian_kde(np.where(f1g<50)).pdf(np.arange(640))
+    f1g=sp.stats.gaussian_kde(np.where(f1g<dellim)).pdf(np.arange(640))
 except:
     f1g=np.zeros(640)
 f1b=frame1[:,240,1]
 try:
-    f1b=sp.stats.gaussian_kde(np.where(f1b<50)).pdf(np.arange(640))
+    f1b=sp.stats.gaussian_kde(np.where(f1b<dellim)).pdf(np.arange(640))
 except:
     f1b=np.zeros(640)
 '''
